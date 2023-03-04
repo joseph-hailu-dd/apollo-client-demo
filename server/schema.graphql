@@ -1,0 +1,53 @@
+type Book {
+  ibsn: ID!
+  title: String
+  author: String
+}
+type BookResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+  book: Book
+}
+
+input GetBookQueryInput {
+  ibsn: ID!
+}
+input ListBooksQueryInput {
+  limit: Int
+  offset: Int
+}
+
+type ListBooksResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+  data: BooksData
+}
+type BooksData {
+  books: [Book]
+  total: Int
+  limit: Int
+  offset: Int
+}
+
+type Query {
+  books: [Book]
+  getBook(input: GetBookQueryInput!): BookResponse
+  listBooks(input: ListBooksQueryInput!): ListBooksResponse
+}
+
+input AddBookMutationInput {
+  title: String
+  author: String
+}
+
+input EditBookMutationInput {
+  ibsn: ID!
+  title: String
+  author: String
+}
+type Mutation {
+  addBook(input: AddBookMutationInput!): BookResponse
+  editBook(input: EditBookMutationInput!): BookResponse
+}
